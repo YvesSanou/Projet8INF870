@@ -21,14 +21,14 @@ void Sommet::setId(int id) {
 	id = id;
 }
 
-std::vector<Sommet> Sommet::getVoisins() {
+std::vector<int> Sommet::getVoisins() {
 	return voisins;
 }
 
-void Sommet::setVoisins(std::vector<Sommet> voisins) {
+void Sommet::setVoisins(std::vector<int> voisins) {
 	voisins = voisins;
 }
-void Sommet::addVoisin(Sommet voisin)
+void Sommet::addVoisin(int voisin)
 {
 	voisins.push_back(voisin);
 }

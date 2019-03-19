@@ -10,6 +10,7 @@ public:
 	Graphe();
 	~Graphe();
 	Sommet Graphe::getSommet(int index);
+	Sommet Graphe::getSommetFromId(int id);
 	int Graphe::graphSize();
 	void Graphe::setSommets(std::vector<Sommet> sommets);
 };
