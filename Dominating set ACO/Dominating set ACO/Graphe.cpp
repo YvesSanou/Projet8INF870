@@ -14,8 +14,8 @@ Graphe::~Graphe()
 {
 }
 
-void Graphe::setSommets(std::vector<Sommet> sommets) {
-sommets = sommets;
+void Graphe::setSommets(std::vector<Sommet> value) {
+sommets = value;
 }
 
 bool Graphe::solutionValide(Solution solution)
@@ -70,6 +70,11 @@ int Graphe::graphSize()
 {
 	return sommets.size();
 }
+
+std::vector<Sommet> Graphe::getSommets() {
+	return sommets;
+}
+
 
 Sommet Graphe::getSommet(int index) {
 	return sommets[index];

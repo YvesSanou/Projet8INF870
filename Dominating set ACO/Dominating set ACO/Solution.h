@@ -1,6 +1,8 @@
 #pragma once
 #include<vector>
 #include "Sommet.h"
+#include "Graphe.h"
+#include "Math.h"
 
 
 class Solution
@@ -15,13 +17,13 @@ public:
 	Solution();
 	~Solution();
 	void Solution::initialize(std::vector<Sommet> sommets);
-	void Solution::nextStep(double evap, double t0, double q, int alpha);
-	void Solution::addSommet(Sommet sommet, double evap, double t0);
-	void Solution::updateNonCouverts(Sommet sommet);
+	void Solution::nextStep(Graphe graphe, double evap, double t0, double q, int alpha);
+	void Solution::addSommet(Sommet sommet, Graphe graphe, double evap, double t0);
+	void Solution::updateNonCouverts(Sommet sommet, Graphe graphe);
 	int Solution::selection(std::vector<double> probs);
 	void Solution::localUpdate(Sommet &sommet, double evap, double t0);
 	int Solution::FonctionObj();
-	int Solution::visibilite(std::vector<Sommet> voisins);
+	int Solution::visibilite(Sommet sommet, Graphe graphe);
 	bool Solution::valide();
 	std::vector<Sommet> Solution::getSequence();
 	void Solution::setSequence(std::vector<Sommet> sequenceP);
