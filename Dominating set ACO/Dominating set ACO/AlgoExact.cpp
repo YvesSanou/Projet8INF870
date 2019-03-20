@@ -16,37 +16,35 @@ AlgoExact::~AlgoExact()
 
 Solution AlgoExact::resoudreGraphe(Graphe graphe)
 {
+	Solution solutionFinale;
 	Solution s;
-
-	//Find all subsets
-	int n = graphe.getSommets().size;
-	int  count = pow(2, graphe.getSommets().size);
-	for (int i = 0; i < count; i++)
+	int n = graphe.getSommets().size();
+	int nSub = 1 << n;
+	for (int i = 0; i < nSub; i++)
 	{
 		//Generate a subset
-		std::vector<Sommet> subset;
-		for (int j = 0; j < n; j++)
+		std::vector<Sommet*> subset;
+		for (int k = 0; k < n; k++)
 		{
-			// This if condition will check if jth bit in binary representation of  i  is set or not
-			// if the value of (i & (1 << j)) is greater than 0 , include arr[j] in the current subset
-			// otherwise exclude arr[j]
-			if ((i & (1 << j)) > 0)
+			//if the k-th bit is set
+			if ((1 << k) & i)
 			{
-				subset.push_back(graphe.getSommets()[j]);
+				subset.push_back(graphe.getSommets()[k]);
 			}
 		}
 
 		//Use the subset to construct a Solution
-		Solution s;
 		s.setSequence(subset);
+		s.afficherSolution();
 
 		//Test the solution
-		if (graphe.solutionValide(s))
+		if ( graphe.solutionValide(s) && (s.getSequence().size() < solutionFinale.getSequence().size() || solutionFinale.getSequence().size() == 0))
 		{
-			break;
-			break;
+			solutionFinale = s;
+			std::cout << "Oh, une meilleure solution!" << std::endl;
+			solutionFinale.afficherSolution();
 		}
 	}
 
-	return s;
+	return solutionFinale;
 }

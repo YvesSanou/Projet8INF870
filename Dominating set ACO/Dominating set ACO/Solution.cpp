@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Solution.h"
+#include <iostream>
 
 
 Solution::Solution()
@@ -11,22 +12,22 @@ Solution::~Solution()
 {
 }
 
-void Solution::initialize(std::vector<Sommet> sommets) {
+void Solution::initialize(std::vector<Sommet*> sommets) {
 	sommetsNonSelectionnes = sommets;
 	sommetsNonCouverts = sommets;
 }
 
 void Solution::nextStep(Graphe graphe,double evap, double t0, double q, int alpha) {
 	double random = rand() % RAND_MAX;
-	Sommet selection;
+	Sommet* selection;
 	if (random > q) {
 		selection = sommetsNonSelectionnes[0];
 		int vis = visibilite(selection,graphe);
-		double value = selection.getTrace() * (pow(vis, alpha));
+		double value = selection->getTrace() * (pow(vis, alpha));
 		for (int i = 1; i < sommetsNonSelectionnes.size(); i++) {
-			Sommet current = sommetsNonSelectionnes[i];
+			Sommet* current = sommetsNonSelectionnes[i];
 			vis = visibilite(current,graphe);
-			double temp = current.getTrace() * (pow(vis, alpha));
+			double temp = current->getTrace() * (pow(vis, alpha));
 			if (temp > value) {
 				value = temp;
 				selection = current;
@@ -36,9 +37,9 @@ void Solution::nextStep(Graphe graphe,double evap, double t0, double q, int alph
 	else {
 		std::vector<double> probs = std::vector<double>();
 		for (int i = 0; i < sommetsNonSelectionnes.size(); i++) {
-			Sommet sommet = sommetsNonSelectionnes[i];
+			Sommet* sommet = sommetsNonSelectionnes[i];
 			int vis = visibilite(sommet,graphe);
-			double trace = sommet.getTrace();
+			double trace = sommet->getTrace();
 			double value = trace * pow(vis, alpha);
 			probs.push_back(value);
 		}
@@ -57,7 +58,7 @@ void Solution::nextStep(Graphe graphe,double evap, double t0, double q, int alph
 	addSommet(selection,graphe, evap, t0);
 }
 
-void Solution::addSommet(Sommet sommet,Graphe graphe, double evap, double t0) {
+void Solution::addSommet(Sommet* sommet,Graphe graphe, double evap, double t0) {
 	sequence.push_back(sommet);
 	updateNonCouverts(sommet,graphe);
 	deleteSommet(sommetsNonSelectionnes, sommet);
@@ -65,26 +66,36 @@ void Solution::addSommet(Sommet sommet,Graphe graphe, double evap, double t0) {
 }
 
 
-void Solution::deleteSommet(std::vector<Sommet> &vector,Sommet sommet) {
+void Solution::deleteSommet(std::vector<Sommet*> &vector, Sommet* sommet) {
 	for (int i = 0; i < vector.size(); i++)
 	{
-		if (sommet.getId() == vector[i].getId())
+		if (sommet->getId() == vector[i]->getId())
 		{
 			vector.erase(vector.begin() + i);
 		}
 	}
 }
 
-void Solution::updateNonCouverts(Sommet sommet,Graphe graphe) {
-	std::vector<int> voisins = sommet.getVoisins();
-	std::vector<Sommet> sommetsCouverts;
+void Solution::afficherSolution()
+{
+	std::cout << "{";
+	for (int i = 0; i < sequence.size(); i++)
+	{
+		std::cout << sequence[i]->getId() << ", ";
+	}
+	std::cout << "}" << std::endl;
+}
+
+void Solution::updateNonCouverts(Sommet* sommet,Graphe graphe) {
+	std::vector<int> voisins = sommet->getVoisins();
+	std::vector<Sommet*> sommetsCouverts;
 	sommetsCouverts.push_back(sommet);
 	for (int i = 0; i < voisins.size(); i++) {
 		sommetsCouverts.push_back(graphe.getSommetFromId(voisins[i]));
 	}
 	for (int i = 0; i < sommetsNonCouverts.size(); i++) {
 		for (int j = 0; j < sommetsCouverts.size(); j++) {
-			if (sommetsNonCouverts[i].getId() == sommetsCouverts[j].getId()) {
+			if (sommetsNonCouverts[i]->getId() == sommetsCouverts[j]->getId()) {
 				sommetsCouverts.erase(sommetsCouverts.begin()+j);
 				sommetsNonCouverts.erase(sommetsNonCouverts.begin()+ i);
 				i -= 1;
@@ -110,9 +121,9 @@ int Solution::selection(std::vector<double> probs) {
 	return -1;
 }
 
-void Solution::localUpdate(Sommet &sommet, double evap, double t0) {
-	double trace = ((1 - evap) * sommet.getTrace()) + evap * t0;
-	sommet.setTrace(trace);
+void Solution::localUpdate(Sommet* sommet, double evap, double t0) {
+	double trace = ((1 - evap) * sommet->getTrace()) + evap * t0;
+	sommet->setTrace(trace);
 }
 
 int Solution::FonctionObj() {
@@ -120,15 +131,15 @@ int Solution::FonctionObj() {
 }
 
 
-int Solution::visibilite(Sommet sommet,Graphe graphe) {
-	std::vector<int> voisins = sommet.getVoisins();
+int Solution::visibilite(Sommet* sommet,Graphe graphe) {
+	std::vector<int> voisins = sommet->getVoisins();
 	int result = 0;
 	for (int i = 0; i < sommetsNonCouverts.size(); i++) {
-		Sommet sommet =sommetsNonCouverts[i];
+		Sommet* sommet =sommetsNonCouverts[i];
 		for (int j = 0; j < voisins.size(); j++)
 		{
-			Sommet voisin = graphe.getSommetFromId(voisins[j]);
-			if (sommet.getId() == voisin.getId()) {
+			Sommet* voisin = graphe.getSommetFromId(voisins[j]);
+			if (sommet->getId() == voisin->getId()) {
 				result++;
 				voisins.erase(voisins.begin() + j);
 				break;
@@ -142,12 +153,12 @@ bool Solution::valide() {
 	return sommetsNonCouverts.size() == 0 ? true : false;
 }
 
-std::vector<Sommet> Solution::getSequence()
+std::vector<Sommet*> Solution::getSequence()
 {
 	return sequence;
 }
 
-void Solution::setSequence(std::vector<Sommet> sequenceP)
+void Solution::setSequence(std::vector<Sommet*> sequenceP)
 {
 	Solution::sequence = sequenceP;
 }
