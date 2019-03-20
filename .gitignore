@@ -3,6 +3,10 @@
 *.slo
 *.lo
 *.o
+Debug/*
+*/Debug/*
+.vs/*
+*/.vs/*
 
 # Compiled Dynamic libraries
 *.so

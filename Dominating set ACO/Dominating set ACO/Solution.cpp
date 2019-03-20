@@ -142,6 +142,16 @@ bool Solution::valide() {
 	return sommetsNonCouverts.size() == 0 ? true : false;
 }
 
+std::vector<Sommet> Solution::getSequence()
+{
+	return sequence;
+}
+
+void Solution::setSequence(std::vector<Sommet> sequenceP)
+{
+	Solution::sequence = sequenceP;
+}
+
 bool Solution::termine() {
 	if (valide())
 		return true;

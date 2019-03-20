@@ -1,10 +1,65 @@
-﻿  stdafx.cpp
-  Dominating set ACO.cpp
+﻿  AlgoExact.cpp
   Graphe.cpp
-d:\projects\projet8inf870\dominating set aco\dominating set aco\graphe.cpp(31): warning C4018: '<' : incompatibilité signed/unsigned
-d:\projects\projet8inf870\dominating set aco\dominating set aco\graphe.cpp(33): error C3867: 'Sommet::getId' : syntaxe non-standard ; utilisez '&' pour créer un pointeur vers un membre
-d:\projects\projet8inf870\dominating set aco\dominating set aco\graphe.cpp(33): error C2446: '==' : pas de conversion de 'int' en 'int (__thiscall Sommet::* )(void)'
-  d:\projects\projet8inf870\dominating set aco\dominating set aco\graphe.cpp(33): note: Aucune conversion de valeurs intégrales en valeurs pointeurs de membres
+d:\projects\projet8inf870\dominating set aco\dominating set aco\graphe.cpp(27): warning C4018: '<' : incompatibilité signed/unsigned
+d:\projects\projet8inf870\dominating set aco\dominating set aco\graphe.cpp(34): warning C4018: '<' : incompatibilité signed/unsigned
+d:\projects\projet8inf870\dominating set aco\dominating set aco\graphe.cpp(62): warning C4018: '<' : incompatibilité signed/unsigned
+d:\projects\projet8inf870\dominating set aco\dominating set aco\graphe.cpp(82): warning C4018: '<' : incompatibilité signed/unsigned
+c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\algorithm(2117): error C2672: 'operator __surrogate_func' : fonction correspondante surchargée introuvable
+  c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\algorithm(2140): note: voir la référence à l'instanciation de la fonction modèle '_FwdIt std::unique<_FwdIt,std::equal_to<void>>(_FwdIt,_FwdIt,_Pr)' en cours de compilation
+          with
+          [
+              _FwdIt=std::_Vector_iterator<std::_Vector_val<std::_Simple_types<Sommet>>>,
+              _Pr=std::equal_to<void>
+          ]
+  d:\projects\projet8inf870\dominating set aco\dominating set aco\graphe.cpp(41): note: voir la référence à l'instanciation de la fonction modèle '_FwdIt std::unique<std::_Vector_iterator<std::_Vector_val<std::_Simple_types<_Ty>>>>(_FwdIt,_FwdIt)' en cours de compilation
+          with
+          [
+              _FwdIt=std::_Vector_iterator<std::_Vector_val<std::_Simple_types<Sommet>>>,
+              _Ty=Sommet
+          ]
+c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\algorithm(2117): error C2893: La spécialisation du modèle de fonction 'unknown-type std::equal_to<void>::operator ()(_Ty1 &&,_Ty2 &&) const' a échoué
+  c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\algorithm(2117): note: Avec les arguments template suivants :
+  c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\algorithm(2117): note: '_Ty1=Sommet &'
+  c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\algorithm(2117): note: '_Ty2=Sommet &'
+c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\algorithm(2121): error C2672: 'operator __surrogate_func' : fonction correspondante surchargée introuvable
+c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\algorithm(2121): error C2893: La spécialisation du modèle de fonction 'unknown-type std::equal_to<void>::operator ()(_Ty1 &&,_Ty2 &&) const' a échoué
+  c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\algorithm(2121): note: Avec les arguments template suivants :
+  c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\algorithm(2121): note: '_Ty1=Sommet &'
+  c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\algorithm(2121): note: '_Ty2=Sommet &'
+c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\xutility(1108): error C2672: 'operator __surrogate_func' : fonction correspondante surchargée introuvable
+  c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\xutility(1107): note: voir la référence à l'instanciation de la fonction modèle 'bool std::_Debug_lt_pred<_Pr&,Sommet&,Sommet&>(std::less<void>&,_Ty1,_Ty2) noexcept(<expr>)' en cours de compilation
+          with
+          [
+              _Pr=std::less<void>,
+              _Ty1=Sommet &,
+              _Ty2=Sommet &
+          ]
+  c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\algorithm(4768): note: voir la référence à l'instanciation de la fonction modèle '_OutIt std::set_intersection<_InIt1,_InIt2,_OutIt,std::less<void>>(_InIt1,_InIt1,_InIt2,_InIt2,_OutIt,_Pr)' en cours de compilation
+          with
+          [
+              _OutIt=std::back_insert_iterator<std::vector<Sommet,std::allocator<Sommet>>>,
+              _InIt1=std::_Vector_iterator<std::_Vector_val<std::_Simple_types<Sommet>>>,
+              _InIt2=std::_Vector_iterator<std::_Vector_val<std::_Simple_types<Sommet>>>,
+              _Pr=std::less<void>
+          ]
+  d:\projects\projet8inf870\dominating set aco\dominating set aco\graphe.cpp(52): note: voir la référence à l'instanciation de la fonction modèle '_OutIt std::set_intersection<std::_Vector_iterator<std::_Vector_val<std::_Simple_types<_Ty>>>,std::_Vector_iterator<std::_Vector_val<std::_Simple_types<_Ty>>>,std::back_insert_iterator<std::vector<_Ty,std::allocator<_Ty>>>>(_InIt1,_InIt1,_InIt2,_InIt2,_OutIt)' en cours de compilation
+          with
+          [
+              _OutIt=std::back_insert_iterator<std::vector<Sommet,std::allocator<Sommet>>>,
+              _Ty=Sommet,
+              _InIt1=std::_Vector_iterator<std::_Vector_val<std::_Simple_types<Sommet>>>,
+              _InIt2=std::_Vector_iterator<std::_Vector_val<std::_Simple_types<Sommet>>>
+          ]
+c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\xutility(1108): error C2893: La spécialisation du modèle de fonction 'unknown-type std::less<void>::operator ()(_Ty1 &&,_Ty2 &&) const' a échoué
+  c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\xutility(1108): note: Avec les arguments template suivants :
+  c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\xutility(1108): note: '_Ty1=Sommet &'
+  c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\xutility(1108): note: '_Ty2=Sommet &'
+c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\xutility(1108): error C2056: expression non conforme
+c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\algorithm(4731): error C2672: 'operator __surrogate_func' : fonction correspondante surchargée introuvable
+c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\algorithm(4731): error C2893: La spécialisation du modèle de fonction 'unknown-type std::less<void>::operator ()(_Ty1 &&,_Ty2 &&) const' a échoué
+  c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\algorithm(4731): note: Avec les arguments template suivants :
+  c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\algorithm(4731): note: '_Ty1=Sommet &'
+  c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\algorithm(4731): note: '_Ty2=Sommet &'
   Solution.cpp
 d:\projects\projet8inf870\dominating set aco\dominating set aco\solution.cpp(27): error C2664: 'int Solution::visibilite(std::vector<Sommet,std::allocator<_Ty>>)' : impossible de convertir l'argument 1 de 'std::vector<int,std::allocator<_Ty>>' en 'std::vector<Sommet,std::allocator<_Ty>>'
           with
@@ -69,5 +124,4 @@ d:\projects\projet8inf870\dominating set aco\dominating set aco\solution.cpp(89)
 d:\projects\projet8inf870\dominating set aco\dominating set aco\solution.cpp(104): warning C4018: '<' : incompatibilité signed/unsigned
 d:\projects\projet8inf870\dominating set aco\dominating set aco\solution.cpp(129): warning C4018: '<' : incompatibilité signed/unsigned
 d:\projects\projet8inf870\dominating set aco\dominating set aco\solution.cpp(131): warning C4018: '<' : incompatibilité signed/unsigned
-  Sommet.cpp
   Génération de code en cours...

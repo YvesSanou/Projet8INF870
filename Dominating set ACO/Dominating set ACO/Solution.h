@@ -23,6 +23,8 @@ public:
 	int Solution::FonctionObj();
 	int Solution::visibilite(std::vector<Sommet> voisins);
 	bool Solution::valide();
+	std::vector<Sommet> Solution::getSequence();
+	void Solution::setSequence(std::vector<Sommet> sequenceP);
 	bool Solution::termine();
 	void Solution::deleteSommet(std::vector<Sommet> &vector, Sommet sommet);
 };
