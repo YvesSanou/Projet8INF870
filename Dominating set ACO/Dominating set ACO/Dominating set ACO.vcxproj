@@ -145,6 +145,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ACO.h" />
     <ClInclude Include="Graphe.h" />
     <ClInclude Include="Solution.h" />
     <ClInclude Include="Sommet.h" />
@@ -152,8 +153,9 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Dominating set ACO.cpp" />
+    <ClCompile Include="ACO.cpp" />
     <ClCompile Include="Graphe.cpp" />
+    <ClCompile Include="Main.cpp" />
     <ClCompile Include="Solution.cpp" />
     <ClCompile Include="Sommet.cpp" />
     <ClCompile Include="stdafx.cpp">

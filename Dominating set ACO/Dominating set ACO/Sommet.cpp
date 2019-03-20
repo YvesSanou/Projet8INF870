@@ -8,25 +8,25 @@ Sommet::Sommet()
 
 }
 
-Sommet::Sommet(int temp)
+Sommet::Sommet(int value)
 {
-	id = temp;
+	id = value;
 }
 
 int Sommet::getId() {
 	return id;
 }
 
-void Sommet::setId(int id) {
-	id = id;
+void Sommet::setId(int value) {
+	id = value;
 }
 
 std::vector<int> Sommet::getVoisins() {
 	return voisins;
 }
 
-void Sommet::setVoisins(std::vector<int> voisins) {
-	voisins = voisins;
+void Sommet::setVoisins(std::vector<int> value) {
+	voisins = value;
 }
 void Sommet::addVoisin(int voisin)
 {
@@ -37,8 +37,8 @@ double Sommet::getTrace() {
 	return trace;
 }
 
-void Sommet::setTrace(double trace) {
-	trace = trace;
+void Sommet::setTrace(double value) {
+	trace = value;
 }
 
 Sommet::~Sommet()

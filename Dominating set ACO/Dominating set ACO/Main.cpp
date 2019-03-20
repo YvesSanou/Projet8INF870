@@ -2,14 +2,12 @@
 //
 
 #include "stdafx.h"
-#include "sommet.h"
+#include "ACO.h"
 
 
 int main()
 {
-	Sommet s(1);
-	Sommet s2(2);
-	s.addVoisin(2);
-	int a = 0;
+	ACO algo;
+	algo.run();
 }
 
