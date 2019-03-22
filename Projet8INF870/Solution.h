@@ -10,6 +10,7 @@ class Solution
 {
 private:
 	double fonctionObjective;
+	int grapheSize;
 	std::vector<Sommet*> sequence;
 	std::vector<Sommet*> sommetsNonSelectionnes;
 	std::vector<Sommet*> sommetsNonCouverts;

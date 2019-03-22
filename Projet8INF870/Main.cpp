@@ -11,8 +11,6 @@
 
 int main()
 {
-	//ACO algo;
-	//algo.run();
 
 	//Exemple graphe
 	Sommet s1(1);
@@ -53,12 +51,17 @@ int main()
 
 	AlgoExact algoExact;
 
-	Solution solution = algoExact.resoudreGraphe(graphe);
+	Solution solution = algoExact.resoudreGraphe(graphe2);
 	std::cout << "Solution finale:" << std::endl;
 	solution.afficherSolution();
 
 	Solution solution2 = algoExact.resoudreGraphe(graphe2);
 	std::cout << "Solution finale:" << std::endl;
 	solution2.afficherSolution();
+
+
+	std::cout << "Ant Colony System" << std::endl;
+	ACO algo;
+	algo.run();
 }
 

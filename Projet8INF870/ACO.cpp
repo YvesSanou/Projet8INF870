@@ -11,33 +11,73 @@ ACO::~ACO()
 }
 
 void ACO::run() {
-	Graphe graphe = instance_test();
+	GenerateurInstances gen;
+	Graphe graphe = gen.donnerExemple();
 	Solution best;
 
 	for (int i = 0; i < nb_max_iterations; i++) {
-		std::vector<Solution> pop;
-		std::vector<Solution> result;
+		std::vector<Solution*> pop;
+		std::vector<Solution*> result;
 		for (int k = 0; k < pop_size; k++) {
-			Solution sol;
-			sol.initialize(graphe.getSommets());
+			Solution* sol=new Solution();
+			(*sol).initialize(graphe.getSommets());
 			pop.push_back(sol);
 		}
-
-		Solution current = pop[0];
-		while (!current.termine()) {
-			//for (int j = 0; j < pop.size(); j++) {
-			//Solution current = pop.get(0);
-			/*if (current.termine()) {
-			pop.remove(current);
-			result.add(current);
-			} else
-			current.nextStep(graphe,evap, t0, q, graphe, alpha);
-			//}*/
-			current.nextStep(graphe, evap, t0, q, alpha);
+		int j = 0;
+		while (pop.size()!=0) {
+			if (j == pop.size())
+			{
+				j = 0;
+			}
+			Solution* current = pop[j];
+			if ((*current).termine()) {
+				pop.erase(pop.begin() + j);
+				result.push_back(current);
+				if(j!=0)
+					j--;
+			}
+			else
+			{
+				(*current).nextStep(graphe, evapLocal, t0, q, alpha);
+				j++;
+			}
 		}
-		int a = 0;
-
+		Solution b=GlobalUpdate(result);
+		if (best.getSequence().size()==0)
+		{
+			best = b;
+		}
+		else
+		{
+			if (b.FonctionObj() > best.FonctionObj())
+			{
+				best = b;
+			}
+		}
 	}
+	best.afficherSolution();
+	int a = 0;
+}
+
+
+Solution ACO::GlobalUpdate(std::vector<Solution*> pop)
+{
+	Solution* bestSolution = pop[0];
+	for (int i = 0; i < pop.size(); i++)
+	{
+		if ((*pop[i]).valide() && (*pop[i]).FonctionObj() > (*bestSolution).FonctionObj())
+		{
+			bestSolution = pop[i];
+		}
+	}
+	std::vector<Sommet*> sequence = (*bestSolution).getSequence();
+	for (int i = 0; i < sequence.size(); i++)
+	{
+		Sommet* s = sequence[i];
+		double trace= evapGlobal * s->getTrace() + ((1 - evapGlobal) * (t1/(*bestSolution).FonctionObj()));
+		s->setTrace(trace);
+	}
+	return *bestSolution;
 }
 
 Graphe ACO::instance_test() {

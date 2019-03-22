@@ -13,6 +13,7 @@ Solution::~Solution()
 }
 
 void Solution::initialize(std::vector<Sommet*> sommets) {
+	grapheSize = sommets.size();
 	sommetsNonSelectionnes = sommets;
 	sommetsNonCouverts = sommets;
 }
@@ -122,12 +123,12 @@ int Solution::selection(std::vector<double> probs) {
 }
 
 void Solution::localUpdate(Sommet* sommet, double evap, double t0) {
-	double trace = ((1 - evap) * sommet->getTrace()) + evap * t0;
+	double trace = ( evap* sommet->getTrace()) + (1 - evap) * t0;
 	sommet->setTrace(trace);
 }
 
 int Solution::FonctionObj() {
-	return sequence.size();
+	return grapheSize/sequence.size();
 }
 
 
