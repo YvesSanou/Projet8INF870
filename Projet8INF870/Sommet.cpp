@@ -25,6 +25,17 @@ std::vector<int> Sommet::getVoisins() {
 	return voisins;
 }
 
+std::vector<int> Sommet::getSuperVoisins()
+{
+	return superVoisins;
+}
+
+void Sommet::setSuperVoisins()
+{
+	superVoisins = voisins;
+	superVoisins.push_back(id);
+}
+
 void Sommet::setVoisins(std::vector<int> value) {
 	voisins = value;
 }

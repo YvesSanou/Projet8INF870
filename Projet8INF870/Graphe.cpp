@@ -96,3 +96,8 @@ Sommet* Graphe::getSommetFromId(int id)
 
 	return nullptr;
 }
+
+void Graphe::deleteSommetFromIndex(int index)
+{
+	sommets.erase(sommets.begin() + index);
+}

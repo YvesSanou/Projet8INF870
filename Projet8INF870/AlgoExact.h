@@ -7,6 +7,8 @@ class AlgoExact
 	public:
 		AlgoExact();
 		~AlgoExact();
-		Solution resoudreGraphe(Graphe graphe);
+		Solution resoudreTrivial(Graphe graphe);
+		Solution resoudreReed(Graphe graphe);
+		Solution resoudreGrandoni(Graphe graphe);
 };
 

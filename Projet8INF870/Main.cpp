@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "ACO.h"
 #include "AlgoExact.h"
+#include "Chronometre.h"
 #include "GenerateurInstances.h"
 #include <vector>
 #include <iostream>
@@ -45,17 +46,25 @@ int main()
 	Graphe graphe;
 	graphe.setSommets(listeSommets);
 
-	GenerateurInstances generateur;
-	Graphe graphe2 = generateur.donnerExemple();
-
-
 	AlgoExact algoExact;
+	Chronometre chrono;
 
-	Solution solution = algoExact.resoudreGraphe(graphe2);
+	chrono.start();
+	Solution solution = algoExact.resoudreTrivial(graphe);
+	chrono.stop();
+	chrono.afficherTempsEcoule();
 	std::cout << "Solution finale:" << std::endl;
 	solution.afficherSolution();
 
-	Solution solution2 = algoExact.resoudreGraphe(graphe2);
+
+
+	GenerateurInstances generateur;
+	Graphe graphe2 = generateur.donnerExemple();
+
+	chrono.start();
+	Solution solution2 = algoExact.resoudreTrivial(graphe2);
+	chrono.stop();
+	chrono.afficherTempsEcoule();
 	std::cout << "Solution finale:" << std::endl;
 	solution2.afficherSolution();
 
