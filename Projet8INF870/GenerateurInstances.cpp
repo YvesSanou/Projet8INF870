@@ -1,9 +1,19 @@
+#include "stdafx.h""
 #include "Solution.h"
 #include "Sommet.h"
 #include "Graphe.h"
+#include "GenerateurInstances.h"
 
+GenerateurInstances::GenerateurInstances()
+{
+}
 
-int main() {
+GenerateurInstances::~GenerateurInstances()
+{
+}
+
+Graphe GenerateurInstances::donnerExemple()
+{
 	std::vector<Sommet*> sommets;
 	// std::vector<Sommet> sommetsOpti;
 	Graphe g = Graphe();
@@ -15,9 +25,9 @@ int main() {
 	{ 0, 5, 9 },{ 2, 5, 7 },{ 4, 6, 3 },{ 1, 5, 8 },
 	{ 4, 1, 9 },{ 2, 6, 9 },{ 7, 8, 3 } };
 
-	for (int i = 0; i < listeSommets.size(); i++){
-		Sommet s(listeSommets[i]);
-		sommets.push_back(&s);
+	for (int i = 0; i < listeSommets.size(); i++) {
+		Sommet* pointeurSommet = new Sommet(listeSommets[i]);
+		sommets.push_back(pointeurSommet);
 	}
 	for (int i = 0; i < voisins.size(); i++) {
 		for (int j = 0; j < voisins[i].size(); j++) {
@@ -30,5 +40,5 @@ int main() {
 
 	g.setSommets(sommets);
 
-	return 1;
+	return g;
 }

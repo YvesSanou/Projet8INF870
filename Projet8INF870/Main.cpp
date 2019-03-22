@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "ACO.h"
 #include "AlgoExact.h"
+#include "GenerateurInstances.h"
 #include <vector>
 #include <iostream>
 
@@ -46,10 +47,18 @@ int main()
 	Graphe graphe;
 	graphe.setSommets(listeSommets);
 
+	GenerateurInstances generateur;
+	Graphe graphe2 = generateur.donnerExemple();
+
 
 	AlgoExact algoExact;
+
 	Solution solution = algoExact.resoudreGraphe(graphe);
 	std::cout << "Solution finale:" << std::endl;
 	solution.afficherSolution();
+
+	Solution solution2 = algoExact.resoudreGraphe(graphe2);
+	std::cout << "Solution finale:" << std::endl;
+	solution2.afficherSolution();
 }
 

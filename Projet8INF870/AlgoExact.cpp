@@ -41,8 +41,10 @@ Solution AlgoExact::resoudreGraphe(Graphe graphe)
 		if ( graphe.solutionValide(s) && (s.getSequence().size() < solutionFinale.getSequence().size() || solutionFinale.getSequence().size() == 0))
 		{
 			solutionFinale = s;
+			std::cout << "===========================" << std::endl;
 			std::cout << "Oh, une meilleure solution!" << std::endl;
 			solutionFinale.afficherSolution();
+			std::cout << "===========================" << std::endl;
 		}
 	}
 
