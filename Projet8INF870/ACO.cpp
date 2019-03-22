@@ -42,27 +42,27 @@ void ACO::run() {
 
 Graphe ACO::instance_test() {
 	Graphe result;
-	Sommet S1(1);
-	S1.setTrace(t0);
-	Sommet S2(2);
-	S2.setTrace(t0);
-	Sommet S3(3);
-	S3.setTrace(t0);
-	Sommet S4(4);
-	S4.setTrace(t0);
-	Sommet S5(5);
-	S5.setTrace(t0);
+	Sommet* S1 = new Sommet(1);
+	S1->setTrace(t0);
+	Sommet* S2 = new Sommet(2);
+	S2->setTrace(t0);
+	Sommet* S3 = new Sommet(3);
+	S3->setTrace(t0);
+	Sommet* S4 = new Sommet(4);
+	S4->setTrace(t0);
+	Sommet* S5 = new Sommet(5);
+	S5->setTrace(t0);
 
-	S1.addVoisin(S3.getId());
-	S2.addVoisin(S4.getId());
-	S3.addVoisin(S5.getId());
-	S3.addVoisin(S1.getId());
-	S4.addVoisin(S5.getId());
-	S4.addVoisin(S2.getId());
-	S5.addVoisin(S1.getId());
-	S5.addVoisin(S4.getId());
-	S5.addVoisin(S3.getId());
-	std::vector<Sommet> sommets;
+	S1->addVoisin(S3->getId());
+	S2->addVoisin(S4->getId());
+	S3->addVoisin(S5->getId());
+	S3->addVoisin(S1->getId());
+	S4->addVoisin(S5->getId());
+	S4->addVoisin(S2->getId());
+	S5->addVoisin(S1->getId());
+	S5->addVoisin(S4->getId());
+	S5->addVoisin(S3->getId());
+	std::vector<Sommet*> sommets;
 	sommets.push_back(S1);
 	sommets.push_back(S2);
 	sommets.push_back(S3);
