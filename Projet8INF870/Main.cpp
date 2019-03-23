@@ -59,7 +59,7 @@ int main()
 
 
 	GenerateurInstances generateur;
-	Graphe graphe2 = generateur.donnerExemple();
+	Graphe graphe2 = generateur.testExemple(20,30);
 
 	chrono.start();
 	Solution solution2 = algoExact.resoudreTrivial(graphe2);
@@ -71,6 +71,8 @@ int main()
 
 	std::cout << "Ant Colony System" << std::endl;
 	ACO algo;
-	algo.run();
+	algo.run(graphe2);
+
+	return 0;
 }
 

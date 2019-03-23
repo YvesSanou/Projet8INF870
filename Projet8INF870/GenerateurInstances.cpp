@@ -1,8 +1,11 @@
-#include "stdafx.h""
+#include "stdafx.h"
+#include "stdlib.h"
+#include "time.h"
 #include "Solution.h"
 #include "Sommet.h"
 #include "Graphe.h"
 #include "GenerateurInstances.h"
+#include <iostream>
 
 GenerateurInstances::GenerateurInstances()
 {
@@ -10,6 +13,61 @@ GenerateurInstances::GenerateurInstances()
 
 GenerateurInstances::~GenerateurInstances()
 {
+}
+
+Graphe GenerateurInstances::testExemple(int nombreSommets, int nombreAretes) {
+	std::vector<Sommet *> sommets;
+	Graphe g = Graphe();
+
+	srand(time(NULL));
+
+	// création sommets
+	for (int i = 0; i < nombreSommets; i++) {
+		sommets.push_back(new Sommet(i));
+	}
+
+	// ajout d'un sommet voisin spécifique à chaque sommet de la solution optimale
+	/*for (int j = 0; j < nombreSommetsSolOpti; j++)
+	{
+		std::cout << j << " " << j + nombreSommetsSolOpti << std::endl;
+		sommets.at(j)->addVoisin(j + nombreSommetsSolOpti);
+		sommets.at(j + nombreSommetsSolOpti)->addVoisin(j);
+	}*/
+
+	// Pour être sûr que tous les sommets soient connectés à au moins un autre
+	for (int j = 0; j < nombreSommets; j++)
+	{
+		int x, y;
+		x = j;
+		do {
+			y = rand() % nombreSommets;
+		} while ((x == y));
+
+		std::cout << x << " " << y << std::endl;
+		sommets.at(x)->addVoisin(y);
+		sommets.at(y)->addVoisin(x);
+	}
+
+	for (int j = nombreSommets; j < nombreAretes; j++)
+	{
+		std::vector<int> voisins;
+		int x, y;
+		do {
+			x = rand() % nombreSommets;
+			do {
+				y = rand() % nombreSommets;
+			} while ((x == y));
+
+			voisins = sommets.at(x)->getVoisins();
+		} while (std::find(voisins.begin(), voisins.end(), y) != voisins.end());
+
+		std::cout << x << " " << y << std::endl;
+		sommets.at(x)->addVoisin(y);
+		sommets.at(y)->addVoisin(x);
+	}
+
+	g.setSommets(sommets);
+	return g;
 }
 
 Graphe GenerateurInstances::donnerExemple()

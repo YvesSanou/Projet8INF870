@@ -10,9 +10,9 @@ ACO::~ACO()
 {
 }
 
-void ACO::run() {
+void ACO::run(Graphe g) {
 	GenerateurInstances gen;
-	Graphe graphe = gen.donnerExemple();
+	Graphe graphe = g;
 	Solution best;
 
 	for (int i = 0; i < nb_max_iterations; i++) {
