@@ -59,7 +59,7 @@ int main()
 
 
 	GenerateurInstances generateur;
-	Graphe graphe2 = generateur.testExemple(20,30);
+	Graphe graphe2 = generateur.testExemple(10,20);
 
 	chrono.start();
 	Solution solution2 = algoExact.resoudreTrivial(graphe2);

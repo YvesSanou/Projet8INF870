@@ -66,6 +66,21 @@ Graphe GenerateurInstances::testExemple(int nombreSommets, int nombreAretes) {
 		sommets.at(y)->addVoisin(x);
 	}
 
+	// Affichage matrice d'adjacence (utiliser http://graphonline.ru/en/create_graph_by_matrix)
+	for (int i = 0; i < nombreSommets; i++)
+	{
+		std::vector<int> voisinsi = sommets.at(i)->getVoisins();
+		for (int j = 0; j < nombreSommets; j++)
+		{
+			if (std::find(voisinsi.begin(), voisinsi.end(), j) != voisinsi.end())
+				std::cout << 1;
+			else
+				std::cout << 0;
+			std::cout << " ";
+		}
+		std::cout << std::endl;
+	}
+
 	g.setSommets(sommets);
 	return g;
 }
