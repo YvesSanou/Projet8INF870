@@ -30,10 +30,30 @@ std::vector<int> Sommet::getSuperVoisins()
 	return superVoisins;
 }
 
-void Sommet::setSuperVoisins()
+void Sommet::initSuperVoisins()
 {
 	superVoisins = voisins;
 	superVoisins.push_back(id);
+}
+
+void Sommet::setSuperVoisins(std::vector<int> superVoisinsP)
+{
+	superVoisins = superVoisinsP;
+}
+
+void Sommet::deleteSuperVoisinFromId(int id)
+{
+	int index = 0;
+	for (int i = 0; i < superVoisins.size(); i++)
+	{
+		if (superVoisins[i] == id)
+		{
+			index = i;
+			break;
+		}
+	}
+	superVoisins.erase(superVoisins.begin()+index);
+
 }
 
 void Sommet::setVoisins(std::vector<int> value) {

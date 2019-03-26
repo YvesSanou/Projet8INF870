@@ -48,6 +48,7 @@ int main()
 
 	AlgoExact algoExact;
 	Chronometre chrono;
+	/*
 
 	chrono.start();
 	Solution solution = algoExact.resoudreTrivial(graphe);
@@ -55,22 +56,34 @@ int main()
 	chrono.afficherTempsEcoule();
 	std::cout << "Solution finale:" << std::endl;
 	solution.afficherSolution();
-
+	*/
 
 
 	GenerateurInstances generateur;
 	Graphe graphe2 = generateur.donnerExemple();
 
+	
 	chrono.start();
 	Solution solution2 = algoExact.resoudreTrivial(graphe2);
 	chrono.stop();
 	chrono.afficherTempsEcoule();
 	std::cout << "Solution finale:" << std::endl;
 	solution2.afficherSolution();
+	
 
+	chrono.start();
+	Solution solution3 = algoExact.resoudreGrandoni(graphe2);
+	chrono.stop();
+	chrono.afficherTempsEcoule();
+	std::cout << "Solution finale:" << std::endl;
+	solution3.afficherSolution();
 
+	system("pause");
+
+	/*
 	std::cout << "Ant Colony System" << std::endl;
 	ACO algo;
 	algo.run();
+	*/
 }
 

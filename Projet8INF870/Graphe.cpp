@@ -101,3 +101,16 @@ void Graphe::deleteSommetFromIndex(int index)
 {
 	sommets.erase(sommets.begin() + index);
 }
+
+void Graphe::deleteSommetFromId(int id)
+{
+	int index;
+	for (int i = 0; i < sommets.size(); i++)
+	{
+		if (id == sommets[i]->getId())
+		{
+			index = i;
+		}
+	}
+	sommets.erase(sommets.begin() + index);
+}

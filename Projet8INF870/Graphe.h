@@ -16,6 +16,7 @@ public:
 	std::vector<Sommet*> Graphe::getSommets();
 	Sommet* Graphe::getSommetFromId(int id);
 	void Graphe::deleteSommetFromIndex(int index);
+	void Graphe::deleteSommetFromId(int id);
 	int Graphe::graphSize();
 	void Graphe::setSommets(std::vector<Sommet*> sommets);
 	bool solutionValide(Solution solution);

@@ -17,7 +17,9 @@ public:
 	void Sommet::setId(int id);
 	std::vector<int> Sommet::getVoisins();
 	std::vector<int> Sommet::getSuperVoisins();
-	void Sommet::setSuperVoisins();
+	void Sommet::initSuperVoisins();
+	void Sommet::setSuperVoisins(std::vector<int> superVoisinsP);
+	void Sommet::deleteSuperVoisinFromId(int id);
 	void setVoisins(std::vector<int> voisins);
 	void Sommet::addVoisin(int voisin);
 	double Sommet::getTrace();

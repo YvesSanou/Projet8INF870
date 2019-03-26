@@ -89,23 +89,102 @@ Solution AlgoExact::resoudreGrandoni(Graphe graphe)
 	//Transform into Minimum set cover problem
 	for (int i =0; i < listeSommets.size(); i++)
 	{
-		listeSommets[i]->setSuperVoisins();
+		listeSommets[i]->initSuperVoisins();
 	}
 
-	return Solution();
+	return MinimumSetCover(graphe);
 }
 
-int MinimumSetCover(Graphe graphe)
+Graphe AlgoExact::supprimerSommetsSuperVoisins(Graphe graphe, std::vector<Sommet*> sommetsASupprimer)
+{
+	// Pour chaque sommet à supprimeryhgt
+	int test = 0;
+
+	for (int i = 0; i < sommetsASupprimer.size(); i++)
+	{
+		//On cherche les supersVoisins contenant ce sommet
+		std::vector<Sommet*> listeSommets = graphe.getSommets();
+		for (int j = 0; j < listeSommets.size(); j++)
+		{
+			//si listeSommets[j]->getSuperVoisins() contient sommetsASupprimer[i]->getId()
+			std::vector<int> superVoisins = listeSommets[j]->getSuperVoisins();
+
+			//Ici on fait disparaitre le voisin des superVoisins
+			superVoisins.erase(std::remove_if(superVoisins.begin(), superVoisins.end(), [&](int unSuperVoisin)
+			{
+				return unSuperVoisin == sommetsASupprimer[i]->getId();
+			}), superVoisins.end());
+
+			//Update
+			listeSommets[j]->setSuperVoisins(superVoisins);
+
+		}
+		graphe.setSommets(listeSommets);
+	}
+
+
+	//Si un sommet se retrouve avec un superVoisins vide, on supprime le sommet
+	std::vector<Sommet*> nouvelleListeSommets = graphe.getSommets();
+	std::vector<int> idsToDelete;
+	for (int i = 0; i < nouvelleListeSommets.size(); i++)
+	{
+		if (nouvelleListeSommets[i]->getSuperVoisins().size() == 0)
+		{
+			idsToDelete.push_back(nouvelleListeSommets[i]->getId());
+		}
+	}
+	for (int i = 0; i < idsToDelete.size(); i++)
+	{
+		graphe.deleteSommetFromId(idsToDelete[i]);
+	}
+
+	return graphe;
+}
+
+Solution AlgoExact::fusionnerSolutions(Solution s1, Solution s2)
+{
+	std::vector<Sommet*> sommetsS;
+
+	std::vector<Sommet*> sommetsS1 = s1.getSequence();
+	std::vector<Sommet*> sommetsS2 = s2.getSequence();
+	
+	//On ajoute les sommets des 2 solutions
+	for (int i =0; i < sommetsS1.size(); i++)
+	{
+		sommetsS.push_back(sommetsS1[i]);
+	}
+	for (int i = 0; i < sommetsS2.size(); i++)
+	{
+		sommetsS.push_back(sommetsS2[i]);
+	}
+
+	Solution s;
+	s.setSequence(sommetsS);
+
+	return s;
+}
+
+Solution AlgoExact::MinimumSetCover(Graphe graphe)
 {
 	std::vector<Sommet*> listeSommets = graphe.getSommets();
 
+	//S'il n'y plus de sommets, on retourne une solution vide
 	if (listeSommets.size() == 0)
 	{
-		return 0;
+		Solution s;
+		return s;
+	}
+	else if (listeSommets.size() == 1)
+	{
+		Solution s;
+		std::vector<Sommet*> sequence;
+		sequence.push_back(listeSommets[0]);
+		s.setSequence(sequence);
+		return s;
 	}
 
 	int index;
-	//Si il existe un vector superVoisins inclu dans un autre, on ne le considère pas
+	//S'il existe un vector superVoisins inclu dans un autre, on ne le considère pas
 	for (int i = 0; i < listeSommets.size(); i++)
 	{
 		//On récupère le superVoisin courant
@@ -117,55 +196,96 @@ int MinimumSetCover(Graphe graphe)
 			std::vector<int> superVoisinsCourant2 = listeSommets[j]->getSuperVoisins();
 			if (i != j)
 			{
-				std::vector<Sommet*> intersec;
-				//std::set_intersection(superVoisinsCourant.begin(), superVoisinsCourant.end(), superVoisinsCourant2.begin(), superVoisinsCourant2.end(), std::back_inserter(intersec),[](Sommet* i, Sommet* j) { return (i->getId() < j->getId()); });
+				//On trouve l'intersection des 2 ensembles
+
+				//d'abord, on trie
+				std::sort(superVoisinsCourant.begin(), superVoisinsCourant.end());
+				std::sort(superVoisinsCourant2.begin(), superVoisinsCourant2.end());
+
+				std::vector<int> intersec;
+				std::set_intersection(superVoisinsCourant.begin(), superVoisinsCourant.end(), superVoisinsCourant2.begin(), superVoisinsCourant2.end(), std::back_inserter(intersec));
 				// Si il existe un vector superVoisins inclu dans un autre, on ne le considère plus
 				if (intersec.size() == superVoisinsCourant.size())
 				{
 					Graphe graphe2 = graphe;
 					graphe2.deleteSommetFromIndex(i);
-					MinimumSetCover(graphe2);
+					return MinimumSetCover(graphe2);
 				}
 			}
 		}
 	}
 
+	//Y en at'il un qui n'apparait qu'une fois?
 	//Construction d'une map de présence
 	std::map<int, int> m;
-	for(int i = 0; i < listeSommets.size(); i++)
-	{
-		m[listeSommets[i]->getId()] = 0;
-	}
-
+		//Compter la présence de listeSommets[i]->getId() dans les supers voisins
 	for (int i = 0; i < listeSommets.size(); i++)
 	{
-		//Compter la présence de listeSommets[i]->getId() dans les supers voisins
-		for (int j = 0; j < listeSommets.size(); j++)
+		std::vector<int> superVoisins = listeSommets[i]->getSuperVoisins();
+
+		for (int j = 0; j < superVoisins.size(); j++)
 		{
-			if (std::find(
-				listeSommets[j]->getSuperVoisins().begin(), 
-				listeSommets[j]->getSuperVoisins().end(), 
-				listeSommets[i]->getId()) 
-				!= listeSommets[j]->getSuperVoisins().end())
+			if (m.find(superVoisins[j]) == m.end())
 			{
-				m[listeSommets[i]->getId()]++;
+				m[superVoisins[j]] = 1;
+			}
+			else
+			{
+				m[superVoisins[j]]++;
 			}
 		}
-	}
 
-	//Y en at'il un qui n'apparait qu'une fois?
-	for (int i = 0; i < listeSommets.size(); i++)
+	}
+	
+	//Y en at'il vraiment un qui n'apparait qu'une fois?
+	for (std::map<int, int>::iterator it = m.begin(); it != m.end(); it++)
 	{
-		if (m[listeSommets[i]->getId()] == 1)
+		if (it->second == 1)
 		{
-			return 1 + MinimumSetCover(graphe);
+			//Ce sommet est à ajouter à la solution partielle
+			//Et à supprimer pour l'appel récursif
+			Solution sTemp;
+			std::vector<Sommet*> sommetsTemp;
+			Sommet* s = new Sommet(it->first);
+			sommetsTemp.push_back(s);
+			sTemp.setSequence(sommetsTemp);
+			//On fusionne les solutions
+			return fusionnerSolutions(sTemp, MinimumSetCover(supprimerSommetsSuperVoisins(graphe, sommetsTemp)));
 		}
 	}
 
-	//Si l'on est capable de voir qu'un id se trouve dans un unique superVoisin
+	//Trouver le sommet dont le superVoisin dont la cardinalité est maximale
+	Sommet* sMax = listeSommets[0];
+	int indexSMax = 0;
+	for (int i = 1; i < listeSommets.size(); i++)
+	{
+		if (sMax->getSuperVoisins().size() < listeSommets[i]->getSuperVoisins().size())
+		{
+			sMax = listeSommets[i];
+			indexSMax = i;
+		}
+	}
 
+	//min (MSC(S/S), MSC(del(S,S)))
+	Graphe grapheTemp = graphe;
+	grapheTemp.deleteSommetFromIndex(indexSMax);
 
+	//On calcule les solutions
+	Solution s1 = MinimumSetCover(grapheTemp);
 
+	Solution sTemp2;
+	std::vector<Sommet*> sommetsTemp2;
+	sommetsTemp2.push_back(sMax);
+	sTemp2.setSequence(sommetsTemp2);
+	Solution s2 = fusionnerSolutions(sTemp2, MinimumSetCover(supprimerSommetsSuperVoisins(graphe, sommetsTemp2)));
 
-	return 0;
+	//On prend la plus petite des deux
+	if (s1.getSequence().size() < s2.getSequence().size())
+	{
+		return s1;
+	}
+	else
+	{
+		return s2;
+	}
 }
