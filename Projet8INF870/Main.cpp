@@ -60,7 +60,7 @@ int main()
 
 
 	GenerateurInstances generateur;
-	Graphe graphe2 = generateur.donnerExemple();
+	Graphe graphe2 = generateur.testExemple(10,20);
 
 	
 	chrono.start();
@@ -83,7 +83,8 @@ int main()
 	/*
 	std::cout << "Ant Colony System" << std::endl;
 	ACO algo;
-	algo.run();
-	*/
+	algo.run(graphe2);
+
+	return 0;
 }
 

@@ -6,6 +6,7 @@ class GenerateurInstances
 public:
 	GenerateurInstances();
 	~GenerateurInstances();
+	Graphe testExemple(int sommets, int aretes);
 	Graphe donnerExemple();
 };
 
