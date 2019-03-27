@@ -8,5 +8,6 @@ public:
 	~GenerateurInstances();
 	Graphe testExemple(int sommets, int aretes);
 	Graphe donnerExemple();
+	Graphe donnerExemple2();
 };
 

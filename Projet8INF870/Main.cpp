@@ -78,9 +78,7 @@ int main()
 	std::cout << "Solution finale:" << std::endl;
 	solution3.afficherSolution();
 
-	system("pause");
-
-	/*
+	
 	std::cout << "Ant Colony System" << std::endl;
 	ACO algo;
 	algo.run(graphe2);

@@ -115,3 +115,34 @@ Graphe GenerateurInstances::donnerExemple()
 
 	return g;
 }
+
+Graphe GenerateurInstances::donnerExemple2()
+{
+	std::vector<Sommet*> sommets;
+	// std::vector<Sommet> sommetsOpti;
+	Graphe g = Graphe();
+	// Solution s;
+
+	std::vector<int> listeSommets = { 0,1,2,3,4,5};
+	// std::vector<int> listeSolOpti = { 0,4,8 };
+	std::vector< std::vector<int> > voisins = { { 5,3,4 },{ 5, 3, 4 },{ 5, 4 },
+	{ 0, 1, 4, 5 },{ 0, 3, 2, 1 },{ 0, 3, 2, 1} };
+
+	for (int i = 0; i < listeSommets.size(); i++) {
+		Sommet* pointeurSommet = new Sommet(listeSommets[i]);
+		sommets.push_back(pointeurSommet);
+	}
+	for (int i = 0; i < voisins.size(); i++) {
+		for (int j = 0; j < voisins[i].size(); j++) {
+			sommets.at(i)->addVoisin(voisins[i][j]);
+		}
+	}
+	/* for (int i = 0; i < listeSolOpti.size(); i++) {
+		sommetsOpti.push_back(sommets.at(listeSolOpti[i]));
+	} */
+
+	g.setSommets(sommets);
+
+	return g;
+}
+
