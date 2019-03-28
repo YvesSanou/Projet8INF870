@@ -59,7 +59,7 @@ int main()
 	*/
 
 	GenerateurInstances generateur;
-	Graphe graphe2 = generateur.testExemple(40, 80);
+	Graphe graphe2 = generateur.exempleSolutionConnue(6, 20, 30);
 
 	/*
 	chrono.start("\n=========================\nDEBUT chronometrage methode TRIVIALE");

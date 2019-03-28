@@ -6,7 +6,8 @@ class GenerateurInstances
 public:
 	GenerateurInstances();
 	~GenerateurInstances();
-	Graphe testExemple(int sommets, int aretes);
+	Graphe randomExemple(int sommets, int aretes);
+	Graphe exempleSolutionConnue(int tailleSolution, int sommetsMin, int aretesMin);
 	Graphe donnerExemple();
 	Graphe donnerExemple2();
 };
