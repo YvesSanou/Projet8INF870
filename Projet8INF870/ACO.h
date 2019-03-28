@@ -19,7 +19,7 @@ private:
 public:
 	ACO();
 	~ACO();
-	void ACO::run(Graphe g);
+	Solution ACO::run(Graphe g);
 	Graphe ACO::instance_test();
 	Solution ACO::GlobalUpdate(std::vector<Solution*> pop);
 };

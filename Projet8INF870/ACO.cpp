@@ -10,7 +10,7 @@ ACO::~ACO()
 {
 }
 
-void ACO::run(Graphe g) {
+Solution ACO::run(Graphe g) {
 	GenerateurInstances gen;
 	Graphe graphe = g;
 	Solution best;
@@ -55,8 +55,9 @@ void ACO::run(Graphe g) {
 			}
 		}
 	}
-	best.afficherSolution();
+	//best.afficherSolution();
 	int a = 0;
+	return best;
 }
 
 

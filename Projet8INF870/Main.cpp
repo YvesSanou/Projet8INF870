@@ -58,30 +58,36 @@ int main()
 	solution.afficherSolution();
 	*/
 
-
 	GenerateurInstances generateur;
-	Graphe graphe2 = generateur.testExemple(10,20);
+	Graphe graphe2 = generateur.testExemple(40, 80);
 
-	
-	chrono.start();
+	/*
+	chrono.start("\n=========================\nDEBUT chronometrage methode TRIVIALE");
 	Solution solution2 = algoExact.resoudreTrivial(graphe2);
-	chrono.stop();
+	chrono.stop("FIN chronometrage methode TRIVIALE\n=========================\n");
 	chrono.afficherTempsEcoule();
 	std::cout << "Solution finale:" << std::endl;
-	solution2.afficherSolution();
+	solution2.afficherSolution();*/
 	
 
-	chrono.start();
+	chrono.start("\n=========================\nDEBUT chronometrage methode GRANDONI");
 	Solution solution3 = algoExact.resoudreGrandoni(graphe2);
-	chrono.stop();
+	chrono.stop("FIN chronometrage methode GRANDONI\n=========================\n");
 	chrono.afficherTempsEcoule();
-	std::cout << "Solution finale:" << std::endl;
+	std::cout << "Solution finale:" << graphe2.solutionValide(solution3) << std::endl;
 	solution3.afficherSolution();
 
 	
 	std::cout << "Ant Colony System" << std::endl;
 	ACO algo;
-	algo.run(graphe2);
+	
+
+	chrono.start("\n=========================\nDEBUT chronometrage methode ACO");
+	Solution solution4 = algo.run(graphe2);
+	chrono.stop("FIN chronometrage methode ACO\n=========================\n");
+	chrono.afficherTempsEcoule();
+	std::cout << "Solution finale:" << graphe2.solutionValide(solution4) << std::endl;
+	solution4.afficherSolution();
 
 	return 0;
 }
