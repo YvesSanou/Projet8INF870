@@ -75,7 +75,7 @@ Solution ACO::GlobalUpdate(std::vector<Solution*> pop)
 	for (int i = 0; i < sequence.size(); i++)
 	{
 		Sommet* s = sequence[i];
-		double trace= evapGlobal * s->getTrace() + ((1 - evapGlobal) * (t1/(*bestSolution).FonctionObj()));
+		double trace= evapGlobal * s->getTrace() + ((1 - evapGlobal) * (t1/*/(*bestSolution).FonctionObj()*/));
 		s->setTrace(trace);
 	}
 	return *bestSolution;
