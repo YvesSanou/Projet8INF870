@@ -15,24 +15,63 @@ GenerateurInstances::~GenerateurInstances()
 {
 }
 
+void GenerateurInstances::affichageMatriceAdjacence(Graphe g) {
+	std::vector<Sommet *> sommets = g.getSommets();
+	for (int i = 0; i < sommets.size(); i++)
+	{
+		std::vector<int> voisinsi = sommets.at(i)->getVoisins();
+		for (int j = 0; j < sommets.size(); j++)
+		{
+			if (std::find(voisinsi.begin(), voisinsi.end(), j) != voisinsi.end())
+				std::cout << 1;
+			else
+				std::cout << 0;
+			std::cout << " ";
+		}
+		std::cout << std::endl;
+	}
+	std::cout << std::endl;
+}
+
+void GenerateurInstances::affichageAdjacenceVecteur(Graphe g)
+{
+	std::vector<Sommet *> sommets = g.getSommets();
+	std::cout << "{";
+	for (int i = 0; i < sommets.size(); i++)
+	{
+		std::vector<int> voisinsi = sommets.at(i)->getVoisins();
+		std::cout << "{";
+		for (int j = 0; j < sommets.size(); j++)
+		{
+			if (std::find(voisinsi.begin(), voisinsi.end(), j) != voisinsi.end())
+				std::cout << "1";
+			else
+				std::cout << "0";
+			if (j != sommets.size() - 1)
+				std::cout << ",";
+		}
+		std::cout << "}";
+		if (i != sommets.size() - 1)
+			std::cout << ",";
+	}
+	std::cout << "}";
+	std::cout << std::endl;
+}
+
 Graphe GenerateurInstances::randomExemple(int nombreSommets, int nombreAretes) {
 	std::vector<Sommet *> sommets;
 	Graphe g = Graphe();
 
 	srand(time(NULL));
 
+	int nbAretesMax = nombreSommets * (nombreSommets - 1) / 2;
+	if (nombreAretes > nbAretesMax)
+		nombreAretes = nbAretesMax;
+
 	// création sommets
 	for (int i = 0; i < nombreSommets; i++) {
 		sommets.push_back(new Sommet(i));
 	}
-
-	// ajout d'un sommet voisin spécifique à chaque sommet de la solution optimale
-	/*for (int j = 0; j < nombreSommetsSolOpti; j++)
-	{
-	std::cout << j << " " << j + nombreSommetsSolOpti << std::endl;
-	sommets.at(j)->addVoisin(j + nombreSommetsSolOpti);
-	sommets.at(j + nombreSommetsSolOpti)->addVoisin(j);
-	}*/
 
 	// Pour être sûr que tous les sommets soient connectés à au moins un autre
 	for (int j = 0; j < nombreSommets; j++)
@@ -66,22 +105,10 @@ Graphe GenerateurInstances::randomExemple(int nombreSommets, int nombreAretes) {
 		sommets.at(y)->addVoisin(x);
 	}
 
-	// Affichage matrice d'adjacence (utiliser http://graphonline.ru/en/create_graph_by_matrix)
-	for (int i = 0; i < nombreSommets; i++)
-	{
-		std::vector<int> voisinsi = sommets.at(i)->getVoisins();
-		for (int j = 0; j < nombreSommets; j++)
-		{
-			if (std::find(voisinsi.begin(), voisinsi.end(), j) != voisinsi.end())
-				std::cout << 1;
-			else
-				std::cout << 0;
-			std::cout << " ";
-		}
-		std::cout << std::endl;
-	}
-
 	g.setSommets(sommets);
+
+	// Affichage matrice d'adjacence (utiliser http://graphonline.ru/en/create_graph_by_matrix)
+	affichageMatriceAdjacence(g);
 	return g;
 }
 
@@ -100,11 +127,15 @@ Graphe GenerateurInstances::exempleSolutionConnue(int tailleSolution, int sommet
 	else
 		nombreSommets = sommetsMin;
 
+	int nbAretesMax = ((nombreSommets - tailleSolution)  * (nombreSommets - tailleSolution - 1)/2) + tailleSolution;
+	if (aretesMin > nbAretesMax)
+		aretesMin = nbAretesMax;
+
 	// création sommets
 	for (int i = 0; i < nombreSommets; i++) {
 		sommets.push_back(new Sommet(i));
 	}
-
+	
 	// génération sommets aléatoires
 	for (int i = 0; i < tailleSolution; i++) {
 		int value = rand() % nombreSommets;
@@ -154,18 +185,21 @@ Graphe GenerateurInstances::exempleSolutionConnue(int tailleSolution, int sommet
 	// On a un groupe de sommets pour chaque sommet de la solution optimale
 	// Il faut relier ces groupes pour avoir un graphe correct
 
-	for (int i = 0; i < tailleSolution; i++)
+	if (tailleSolution > 1)
 	{
-		int k;
-		do {
-			k = rand() % tailleSolution;
-		} while (k == i);
-		int x = sommetsAssocies.at(i).at(rand() % sommetsAssocies.at(i).size());
-		int y = sommetsAssocies.at(k).at(rand() % sommetsAssocies.at(k).size());
+		for (int i = 0; i < tailleSolution; i++)
+		{
+			int k;
+			do {
+				k = rand() % tailleSolution;
+			} while (k == i);
+			int x = sommetsAssocies.at(i).at(rand() % sommetsAssocies.at(i).size());
+			int y = sommetsAssocies.at(k).at(rand() % sommetsAssocies.at(k).size());
 
-		std::cout << x << " " << y << std::endl;
-		sommets.at(x)->addVoisin(y);
-		sommets.at(y)->addVoisin(x);
+			std::cout << x << " " << y << std::endl;
+			sommets.at(x)->addVoisin(y);
+			sommets.at(y)->addVoisin(x);
+		}
 	}
 
 	for (int j = nombreSommets + tailleSolution; j < aretesMin; j++)
@@ -187,29 +221,16 @@ Graphe GenerateurInstances::exempleSolutionConnue(int tailleSolution, int sommet
 		sommets.at(y)->addVoisin(x);
 	}
 
-	// Affichage matrice d'adjacence (utiliser http://graphonline.ru/en/create_graph_by_matrix)
-	for (int i = 0; i < nombreSommets; i++)
-	{
-		std::vector<int> voisinsi = sommets.at(i)->getVoisins();
-		for (int j = 0; j < nombreSommets; j++)
-		{
-			if (std::find(voisinsi.begin(), voisinsi.end(), j) != voisinsi.end())
-				std::cout << 1;
-			else
-				std::cout << 0;
-			std::cout << " ";
-		}
-		std::cout << std::endl;
-	}
-
+	std::cout << "Sommets solutions : " << std::endl;
 	for (int i = 0; i < tailleSolution; i++)
 		std::cout << solution.at(i) << " ";
 	std::cout << std::endl;
-	for (int i = 0; i < tailleSolution; i++)
-		std::cout << sommetsUniques.at(i) << " ";
-	std::cout << std::endl;
 
 	g.setSommets(sommets);
+
+	// Affichage matrice d'adjacence (utiliser http://graphonline.ru/en/create_graph_by_matrix)
+	affichageMatriceAdjacence(g);
+
 	return g;
 }
 
@@ -274,3 +295,30 @@ Graphe GenerateurInstances::donnerExemple2()
 	return g;
 }
 
+Graphe GenerateurInstances::exempleMatriceAdjacence(std::vector<std::vector<int>> matrice) {
+	for (int i = 0; i < matrice.size(); i++)
+	{
+		if (matrice.at(i).size() != matrice.size())
+			return Graphe();
+	}
+
+	Graphe g = Graphe();
+	std::vector<Sommet *> sommets;
+
+	for (int i = 0; i < matrice.size(); i++)
+		sommets.push_back(new Sommet(i));
+
+	for (int i = 0; i < matrice.size(); i++) {
+		for (int j = 0; j < matrice.at(i).size(); j++) {
+			if (matrice.at(i).at(j) == 1)
+				sommets.at(i)->addVoisin(j);
+		}
+	}
+
+	g.setSommets(sommets);
+
+	// Affichage matrice d'adjacence (utiliser http://graphonline.ru/en/create_graph_by_matrix)
+	affichageMatriceAdjacence(g);
+
+	return g;
+}
