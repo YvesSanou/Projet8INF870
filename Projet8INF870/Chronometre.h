@@ -2,6 +2,7 @@
 #include <chrono>
 #include <ctime>
 #include <iostream>
+#include <string>
 
 class Chronometre
 {
@@ -14,8 +15,9 @@ class Chronometre
 	public:
 		Chronometre();
 		~Chronometre();
-		void start();
-		void stop();
+		void start(std::string message);
+		void stop(std::string message);
 		void afficherTempsEcoule();
+		int getTempsEcoule();
 };
 

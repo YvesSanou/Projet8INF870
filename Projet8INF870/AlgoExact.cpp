@@ -53,35 +53,6 @@ Solution AlgoExact::resoudreTrivial(Graphe graphe)
 	return solutionFinale;
 }
 
-Solution AlgoExact::resoudreReed(Graphe graphe)
-{
-	std::vector<Sommet*> listeSommets = graphe.getSommets();
-
-	//Avoir l'ensemble des sommets avec 1 unique voisins
-	//Avoir l'ensemble des sommets avec 2 voisins
-	//Avoir l'ensemble des sommets avec 3 voisins ou plus
-	std::vector<Sommet*> listeSommets1;
-	std::vector<Sommet*> listeSommets2;
-	std::vector<Sommet*> listeSommets3EtPlus;
-	for(int i = 0; i < listeSommets.size(); i++)
-	{
-		if (listeSommets[i]->getVoisins().size() == 1)
-		{
-			listeSommets1.push_back(listeSommets[i]);
-		}
-		else if (listeSommets[i]->getVoisins().size() == 2)
-		{
-			listeSommets2.push_back(listeSommets[i]);
-		}
-		else
-		{
-			listeSommets3EtPlus.push_back(listeSommets[i]);
-		}
-	}
-	
-	return Solution();
-}
-
 Solution AlgoExact::resoudreGrandoni(Graphe graphe)
 {
 	std::vector<Sommet*> listeSommets = graphe.getSommets();

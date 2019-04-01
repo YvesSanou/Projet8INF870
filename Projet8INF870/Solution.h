@@ -11,6 +11,7 @@ class Solution
 private:
 	double fonctionObjective;
 	int grapheSize;
+	Sommet* sommetCourant;
 	std::vector<Sommet*> sequence;
 	std::vector<Sommet*> sommetsNonSelectionnes;
 	std::vector<Sommet*> sommetsNonCouverts;
@@ -32,5 +33,7 @@ public:
 	bool termine();
 	void deleteSommet(std::vector<Sommet*> &vector, Sommet* sommet);
 	void afficherSolution();
+	bool dejaSelectionne(Sommet* sommet);
+	std::vector<Sommet*> Solution::voisinsValides(std::vector<Sommet*> voisins);
 };
 

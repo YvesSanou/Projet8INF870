@@ -59,6 +59,16 @@ void Sommet::deleteSuperVoisinFromId(int id)
 void Sommet::setVoisins(std::vector<int> value) {
 	voisins = value;
 }
+
+void Sommet::setPVoisins(std::vector<Sommet*> value)
+{
+	pvoisins = value;
+}
+
+std::vector<Sommet*> Sommet::getPVoisins()
+{
+	return pvoisins;
+}
 void Sommet::addVoisin(int voisin)
 {
 	voisins.push_back(voisin);

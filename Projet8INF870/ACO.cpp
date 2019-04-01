@@ -10,7 +10,7 @@ ACO::~ACO()
 {
 }
 
-void ACO::run(Graphe g) {
+Solution ACO::run(Graphe g) {
 	GenerateurInstances gen;
 	Graphe graphe = g;
 	Solution best;
@@ -55,8 +55,9 @@ void ACO::run(Graphe g) {
 			}
 		}
 	}
-	best.afficherSolution();
+	//best.afficherSolution();
 	int a = 0;
+	return best;
 }
 
 
@@ -74,7 +75,7 @@ Solution ACO::GlobalUpdate(std::vector<Solution*> pop)
 	for (int i = 0; i < sequence.size(); i++)
 	{
 		Sommet* s = sequence[i];
-		double trace= evapGlobal * s->getTrace() + ((1 - evapGlobal) * (t1/(*bestSolution).FonctionObj()));
+		double trace= evapGlobal * s->getTrace() + ((1 - evapGlobal) * (t1/*/(*bestSolution).FonctionObj()*/));
 		s->setTrace(trace);
 	}
 	return *bestSolution;

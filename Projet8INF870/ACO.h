@@ -8,18 +8,18 @@ class ACO
 {
 private:
 	int nb_max_iterations = 5;
-	int pop_size = 5;
+	int pop_size = 2;
 	double q = 0.9;
-	double t0 = 0.1;
+	double t0 = 0.5;
 	double t1 = 1;
-	double evapLocal = 0.4;
-	double evapGlobal = 0.5;
-	int alpha = 1;
+	double evapLocal = 0.8;
+	double evapGlobal = 0.3;
+	int alpha = 2;
 
 public:
 	ACO();
 	~ACO();
-	void ACO::run(Graphe g);
+	Solution ACO::run(Graphe g);
 	Graphe ACO::instance_test();
 	Solution ACO::GlobalUpdate(std::vector<Solution*> pop);
 };

@@ -21,5 +21,6 @@ public:
 	void Graphe::setSommets(std::vector<Sommet*> sommets);
 	bool solutionValide(Solution solution);
 	void afficherSommets(std::vector<Sommet*> sommets);
+	void Graphe::initPsommets();
 };
 

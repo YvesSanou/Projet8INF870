@@ -68,12 +68,12 @@ Graphe GenerateurInstances::randomExemple(int nombreSommets, int nombreAretes) {
 	if (nombreAretes > nbAretesMax)
 		nombreAretes = nbAretesMax;
 
-	// création sommets
+	// crÃ©ation sommets
 	for (int i = 0; i < nombreSommets; i++) {
 		sommets.push_back(new Sommet(i));
 	}
 
-	// Pour être sûr que tous les sommets soient connectés à au moins un autre
+	// Pour Ãªtre sÃ»r que tous les sommets soient connectÃ©s Ã  au moins un autre
 	for (int j = 0; j < nombreSommets; j++)
 	{
 		int x, y;
@@ -82,7 +82,7 @@ Graphe GenerateurInstances::randomExemple(int nombreSommets, int nombreAretes) {
 			y = rand() % nombreSommets;
 		} while ((x == y));
 
-		std::cout << x << " " << y << std::endl;
+		//std::cout << x << " " << y << std::endl;
 		sommets.at(x)->addVoisin(y);
 		sommets.at(y)->addVoisin(x);
 	}
@@ -100,11 +100,11 @@ Graphe GenerateurInstances::randomExemple(int nombreSommets, int nombreAretes) {
 			voisins = sommets.at(x)->getVoisins();
 		} while (std::find(voisins.begin(), voisins.end(), y) != voisins.end());
 
-		std::cout << x << " " << y << std::endl;
+		//std::cout << x << " " << y << std::endl;
 		sommets.at(x)->addVoisin(y);
 		sommets.at(y)->addVoisin(x);
 	}
-
+  
 	g.setSommets(sommets);
 
 	// Affichage matrice d'adjacence (utiliser http://graphonline.ru/en/create_graph_by_matrix)
@@ -131,12 +131,12 @@ Graphe GenerateurInstances::exempleSolutionConnue(int tailleSolution, int sommet
 	if (aretesMin > nbAretesMax)
 		aretesMin = nbAretesMax;
 
-	// création sommets
+	// crÃ©ation sommets
 	for (int i = 0; i < nombreSommets; i++) {
 		sommets.push_back(new Sommet(i));
 	}
 	
-	// génération sommets aléatoires
+	// gÃ©nÃ©ration sommets alÃ©atoires
 	for (int i = 0; i < tailleSolution; i++) {
 		int value = rand() % nombreSommets;
 		if (std::find(solution.begin(), solution.end(), value) == solution.end())
@@ -148,7 +148,7 @@ Graphe GenerateurInstances::exempleSolutionConnue(int tailleSolution, int sommet
 			i--;
 	}
 
-	// génération sommets uniques (permettant aux sommets solutions d'être optimaux)
+	// gÃ©nÃ©ration sommets uniques (permettant aux sommets solutions d'Ãªtre optimaux)
 	for (int i = 0; i < tailleSolution; i++) {
 		int value = rand() % nombreSommets;
 		if (std::find(solution.begin(), solution.end(), value) == solution.end() && std::find(sommetsUniques.begin(), sommetsUniques.end(), value) == sommetsUniques.end())
@@ -157,15 +157,15 @@ Graphe GenerateurInstances::exempleSolutionConnue(int tailleSolution, int sommet
 			i--;
 	}
 
-	// ajout d'un sommet voisin spécifique à chaque sommet de la solution optimale
+	// ajout d'un sommet voisin spÃ©cifique Ã  chaque sommet de la solution optimale
 	for (int i = 0; i < tailleSolution; i++)
 	{
-		std::cout << solution[i] << " " << sommetsUniques[i] << std::endl;
+		//std::cout << solution[i] << " " << sommetsUniques[i] << std::endl;
 		sommets.at(solution[i])->addVoisin(sommetsUniques[i]);
 		sommets.at(sommetsUniques[i])->addVoisin(solution[i]);
 	}
 
-	// Pour attacher chaque point à au moins un sommet de la solution optimale
+	// Pour attacher chaque point Ã  au moins un sommet de la solution optimale
 	for (int j = 0; j < nombreSommets; j++)
 	{
 		if (std::find(solution.begin(), solution.end(), j) != solution.end() || std::find(sommetsUniques.begin(), sommetsUniques.end(), j) != sommetsUniques.end())
@@ -175,7 +175,7 @@ Graphe GenerateurInstances::exempleSolutionConnue(int tailleSolution, int sommet
 		x = j;
 		y = solution.at(k);
 
-		std::cout << x << " " << y << std::endl;
+		//std::cout << x << " " << y << std::endl;
 		sommets.at(x)->addVoisin(y);
 		sommets.at(y)->addVoisin(x);
 
@@ -185,7 +185,7 @@ Graphe GenerateurInstances::exempleSolutionConnue(int tailleSolution, int sommet
 	// On a un groupe de sommets pour chaque sommet de la solution optimale
 	// Il faut relier ces groupes pour avoir un graphe correct
 
-	if (tailleSolution > 1)
+if (tailleSolution > 1)
 	{
 		for (int i = 0; i < tailleSolution; i++)
 		{
@@ -216,7 +216,7 @@ Graphe GenerateurInstances::exempleSolutionConnue(int tailleSolution, int sommet
 		} while (std::find(voisins.begin(), voisins.end(), y) != voisins.end() || std::find(sommetsUniques.begin(), sommetsUniques.end(), x) != sommetsUniques.end() ||
 			std::find(sommetsUniques.begin(), sommetsUniques.end(), y) != sommetsUniques.end());
 
-		std::cout << x << " " << y << std::endl;
+		//std::cout << x << " " << y << std::endl;
 		sommets.at(x)->addVoisin(y);
 		sommets.at(y)->addVoisin(x);
 	}

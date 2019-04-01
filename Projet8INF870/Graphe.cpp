@@ -17,6 +17,24 @@ Graphe::~Graphe()
 void Graphe::setSommets(std::vector<Sommet*> value) 
 {
 	sommets = value;
+	initPsommets();
+}
+
+void Graphe::initPsommets()
+{
+	for (int i = 0; i < sommets.size(); i++)
+	{
+		Sommet* s = sommets[i];
+		std::vector<int> voisins = s->getVoisins();
+		std::vector<Sommet*> pvoisins;
+		for (int j = 0; j < voisins.size(); j++)
+		{
+			int v = voisins[j];
+			Sommet* pv = getSommetFromId(v);
+			pvoisins.push_back(pv);
+		}
+		(*s).setPVoisins(pvoisins);
+	}
 }
 
 bool Graphe::solutionValide(Solution solution)
