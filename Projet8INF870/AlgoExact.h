@@ -13,7 +13,6 @@ class AlgoExact
 		AlgoExact();
 		~AlgoExact();
 		Solution resoudreTrivial(Graphe graphe);
-		Solution resoudreReed(Graphe graphe);
 		Solution resoudreGrandoni(Graphe graphe);
 };
 

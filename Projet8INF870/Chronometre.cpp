@@ -28,3 +28,8 @@ void Chronometre::afficherTempsEcoule()
 {
 	std::cout << "Temps ecoule: " << tempsEcoule << "secondes\n";
 }
+
+int Chronometre::getTempsEcoule()
+{
+	return tempsEcoule;
+}

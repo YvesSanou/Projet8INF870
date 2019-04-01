@@ -43,7 +43,7 @@ Graphe GenerateurInstances::randomExemple(int nombreSommets, int nombreAretes) {
 			y = rand() % nombreSommets;
 		} while ((x == y));
 
-		std::cout << x << " " << y << std::endl;
+		//std::cout << x << " " << y << std::endl;
 		sommets.at(x)->addVoisin(y);
 		sommets.at(y)->addVoisin(x);
 	}
@@ -61,12 +61,13 @@ Graphe GenerateurInstances::randomExemple(int nombreSommets, int nombreAretes) {
 			voisins = sommets.at(x)->getVoisins();
 		} while (std::find(voisins.begin(), voisins.end(), y) != voisins.end());
 
-		std::cout << x << " " << y << std::endl;
+		//std::cout << x << " " << y << std::endl;
 		sommets.at(x)->addVoisin(y);
 		sommets.at(y)->addVoisin(x);
 	}
 
 	// Affichage matrice d'adjacence (utiliser http://graphonline.ru/en/create_graph_by_matrix)
+	/*
 	for (int i = 0; i < nombreSommets; i++)
 	{
 		std::vector<int> voisinsi = sommets.at(i)->getVoisins();
@@ -79,7 +80,7 @@ Graphe GenerateurInstances::randomExemple(int nombreSommets, int nombreAretes) {
 			std::cout << " ";
 		}
 		std::cout << std::endl;
-	}
+	}*/
 
 	g.setSommets(sommets);
 	return g;
@@ -129,7 +130,7 @@ Graphe GenerateurInstances::exempleSolutionConnue(int tailleSolution, int sommet
 	// ajout d'un sommet voisin spécifique à chaque sommet de la solution optimale
 	for (int i = 0; i < tailleSolution; i++)
 	{
-		std::cout << solution[i] << " " << sommetsUniques[i] << std::endl;
+		//std::cout << solution[i] << " " << sommetsUniques[i] << std::endl;
 		sommets.at(solution[i])->addVoisin(sommetsUniques[i]);
 		sommets.at(sommetsUniques[i])->addVoisin(solution[i]);
 	}
@@ -144,7 +145,7 @@ Graphe GenerateurInstances::exempleSolutionConnue(int tailleSolution, int sommet
 		x = j;
 		y = solution.at(k);
 
-		std::cout << x << " " << y << std::endl;
+		//std::cout << x << " " << y << std::endl;
 		sommets.at(x)->addVoisin(y);
 		sommets.at(y)->addVoisin(x);
 
@@ -163,7 +164,7 @@ Graphe GenerateurInstances::exempleSolutionConnue(int tailleSolution, int sommet
 		int x = sommetsAssocies.at(i).at(rand() % sommetsAssocies.at(i).size());
 		int y = sommetsAssocies.at(k).at(rand() % sommetsAssocies.at(k).size());
 
-		std::cout << x << " " << y << std::endl;
+		//std::cout << x << " " << y << std::endl;
 		sommets.at(x)->addVoisin(y);
 		sommets.at(y)->addVoisin(x);
 	}
@@ -182,12 +183,13 @@ Graphe GenerateurInstances::exempleSolutionConnue(int tailleSolution, int sommet
 		} while (std::find(voisins.begin(), voisins.end(), y) != voisins.end() || std::find(sommetsUniques.begin(), sommetsUniques.end(), x) != sommetsUniques.end() ||
 			std::find(sommetsUniques.begin(), sommetsUniques.end(), y) != sommetsUniques.end());
 
-		std::cout << x << " " << y << std::endl;
+		//std::cout << x << " " << y << std::endl;
 		sommets.at(x)->addVoisin(y);
 		sommets.at(y)->addVoisin(x);
 	}
 
 	// Affichage matrice d'adjacence (utiliser http://graphonline.ru/en/create_graph_by_matrix)
+	/*
 	for (int i = 0; i < nombreSommets; i++)
 	{
 		std::vector<int> voisinsi = sommets.at(i)->getVoisins();
@@ -207,7 +209,7 @@ Graphe GenerateurInstances::exempleSolutionConnue(int tailleSolution, int sommet
 	std::cout << std::endl;
 	for (int i = 0; i < tailleSolution; i++)
 		std::cout << sommetsUniques.at(i) << " ";
-	std::cout << std::endl;
+	std::cout << std::endl;*/
 
 	g.setSommets(sommets);
 	return g;

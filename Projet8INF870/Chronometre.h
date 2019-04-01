@@ -18,5 +18,6 @@ class Chronometre
 		void start(std::string message);
 		void stop(std::string message);
 		void afficherTempsEcoule();
+		int getTempsEcoule();
 };
 
