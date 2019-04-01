@@ -59,7 +59,8 @@ int main()
 	*/
 
 	GenerateurInstances generateur;
-	Graphe graphe2 = generateur.exempleSolutionConnue(50, 60, 600);
+	//Graphe graphe2 = generateur.exempleSolutionConnue(100, 150, 600);
+	Graphe graphe2 = generateur.donnerExemple2();
 
 	/*
 	chrono.start("\n=========================\nDEBUT chronometrage methode TRIVIALE");
@@ -76,8 +77,6 @@ int main()
 	chrono.afficherTempsEcoule();
 	std::cout << "Solution finale:" << graphe2.solutionValide(solution3) << std::endl;
 	solution3.afficherSolution();
-
-	
 	std::cout << "Ant Colony System" << std::endl;
 	ACO algo;
 	
