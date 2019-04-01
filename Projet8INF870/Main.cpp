@@ -1,4 +1,4 @@
-// Dominating set ACO.cppÂ : dÃ©finit le point d'entrÃ©e pour l'application console.
+// Dominating set ACO.cpp : définit le point d'entrée pour l'application console.
 //
 
 #include "stdafx.h"
@@ -13,6 +13,7 @@
 int main()
 {
 	AlgoExact algoExact;
+	ACO aco;
 	Chronometre chrono;
 	/*
 
@@ -25,28 +26,48 @@ int main()
 	*/
 
 	GenerateurInstances generateur;
+	Graphe graphe2 = generateur.exempleSolutionConnue(100, 150, 600);
+	//Graphe graphe2 = generateur.donnerExemple2();
 
-	//std::vector<std::vector<int>> mat = {{0,0,1,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0},{0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0},{1,0,0,0,0,0,0,0,0,0,1,1,1,0,1,1,0,0,1,0},{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0},{0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0},{0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0},{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0},{0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0},{0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},{1,0,1,0,0,0,0,0,0,1,0,0,1,0,0,0,0,1,0,0},{1,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,1,1},{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},{1,1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0},{1,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0},{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0},{0,0,0,1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0},{0,0,1,0,0,0,1,0,0,0,0,0,1,0,1,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0}};
-	//Graphe graphe2 = generateur.exempleMatriceAdjacence(mat);
-  
+	/*
+	chrono.start("\n=========================\nDEBUT chronometrage methode TRIVIALE");
+	Solution solution2 = algoExact.resoudreTrivial(graphe2);
+	chrono.stop("FIN chronometrage methode TRIVIALE\n=========================\n");
+	chrono.afficherTempsEcoule();
+	std::cout << "Solution finale:" << std::endl;
+	solution2.afficherSolution();*/
 	std::vector<int> timesInSecondes;
-	for (int i = 1; i < 2000; i += 100)
+	std::vector<int> ecarts;
+	for (int i = 100; i < 3000; i += 100)
 	{
 		Graphe graphe2 = generateur.exempleSolutionConnue(i / 2, i, 2*i);
 		std::cout << "Taille graphe: " << graphe2.getSommets().size() << " sommet(s)" << std::endl;
 
-		chrono.start("\n=========================\nDEBUT chronometrage methode GRANDONI");
-		Solution solution3 = algoExact.resoudreGrandoni(graphe2);
-		chrono.stop("FIN chronometrage methode GRANDONI\n=========================\n");
+		chrono.start("\n=========================\nDEBUT chronometrage methode ACO");
+		Solution solution3 = aco.run(graphe2);
+		chrono.stop("FIN chronometrage methode ACO\n=========================\n");
 		chrono.afficherTempsEcoule();
+		int ecart = solution3.getSequence().size() - (i / 2);
+		std::cout << "i:" << i << std::endl;
 		std::cout << "Solution finale:" << graphe2.solutionValide(solution3) << std::endl;
+		std::cout << "Taille solution optimale:" << solution3.getSequence().size() << std::endl;
+		std::cout << "Ecart solution optimale:" << ecart << std::endl;
 		solution3.afficherSolution();
 		timesInSecondes.push_back(chrono.getTempsEcoule());
+		ecarts.push_back(ecart);
+
 
 		std::cout << "Temps ecoules en secondes\n{";
 		for (int j = 0; j < timesInSecondes.size(); j++)
 		{
 			std::cout << timesInSecondes[j] << ", ";
+		}
+		std::cout << "}\n";
+
+		std::cout << "Ecarts\n{";
+		for (int j = 0; j < ecarts.size(); j++)
+		{
+			std::cout << ecarts[j] << ", ";
 		}
 		std::cout << "}\n";
 	}

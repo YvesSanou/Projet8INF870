@@ -7,8 +7,8 @@
 class ACO
 {
 private:
-	int nb_max_iterations = 5;
-	int pop_size = 2;
+	int nb_max_iterations = 10;
+	int pop_size = 5;
 	double q = 0.9;
 	double t0 = 0.5;
 	double t1 = 1;

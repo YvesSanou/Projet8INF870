@@ -12,6 +12,8 @@ Solution::~Solution()
 {
 }
 
+
+//Initialisation de la solution
 void Solution::initialize(std::vector<Sommet*> sommets) {
 	grapheSize = sommets.size();
 	sommetsNonSelectionnes = sommets;
@@ -19,9 +21,14 @@ void Solution::initialize(std::vector<Sommet*> sommets) {
 	sommetCourant = sommets[rand() % sommets.size()];
 }
 
+
+//Selection d'un sommet a rajouter a la solution
 void Solution::nextStep(Graphe graphe, double evap, double t0, double q, int alpha) {
-	double random = rand() % RAND_MAX;
+	//variable aleatoire exploration/exploitation
+	double random = (double)rand() / RAND_MAX;
 	Sommet* selection;	
+
+	//Fitrage des solutions candidates
 	std::vector<Sommet*> voisins = voisinsValides((*sommetCourant).getPVoisins());
 	if (voisins.size() == 0)
 	{
@@ -33,15 +40,15 @@ void Solution::nextStep(Graphe graphe, double evap, double t0, double q, int alp
 		} while (voisins.size() == 0);
 	}
 	voisins.push_back(sommetCourant);
+
 	//Exploitation
-	if (random > q) {
-		//selection = sommetsNonSelectionnes[0]
+	if (random < q) {
 		selection = voisins[0];
 		int vis = visibilite(selection, graphe);
 		double value = selection->getTrace() * (pow(vis, alpha));
-		//for (int i = 1; i < sommetsNonSelectionnes.size(); i++) {
+
+		//Selection du sommet avec la meilleure probabilité
 		for (int i = 1; i < voisins.size(); i++) {
-			//Sommet* current = sommetsNonSelectionnes[i];
 			Sommet* current = voisins[i];
 			vis = visibilite(current, graphe);
 			double temp = current->getTrace() * (pow(vis, alpha));
@@ -55,8 +62,9 @@ void Solution::nextStep(Graphe graphe, double evap, double t0, double q, int alp
 	//Exploration
 	else {
 		std::vector<double> probs = std::vector<double>();
+
+		//Calcul des probabilites
 		double probSum = 0;
-		//for (int i = 0; i < sommetsNonSelectionnes.size(); i++) {
 		for (int i = 0; i < voisins.size(); i++) {
 			Sommet* sommet = voisins[i];
 			int vis = visibilite(sommet, graphe);
@@ -72,16 +80,22 @@ void Solution::nextStep(Graphe graphe, double evap, double t0, double q, int alp
 		}
 		int index = Solution::selection(probs);
 		selection =voisins[index];
-		int a = 0;
 	}
+	//Ajout du sommet selectionné a la solution
 	addSommet(selection, graphe, evap, t0);
 }
+
+
 
 void Solution::addSommet(Sommet* sommet,Graphe graphe, double evap, double t0) {
 	sequence.push_back(sommet);
 	updateNonCouverts(sommet,graphe);
 	deleteSommet(sommetsNonSelectionnes, sommet);
+
+	//on selectionne aleatoirement un nouveau sommet courant parmis ceux disponibles
 	sommetCourant = sommetsNonSelectionnes[rand() % sommetsNonSelectionnes.size()];
+
+	//Mise a jour locale de la trace de pheromone
 	localUpdate(sommet, evap, t0);
 }
 
@@ -107,9 +121,11 @@ void Solution::afficherSolution()
 	std::cout << "Taille solution "+sequence.size() << std::endl;
 }
 
+//Mise a jour de la liste de sommets non couverts
 void Solution::updateNonCouverts(Sommet* sommet,Graphe graphe) {
 	std::vector<int> voisins = sommet->getVoisins();
 	std::vector<Sommet*> sommetsCouverts;
+
 	sommetsCouverts.push_back(sommet);
 	for (int i = 0; i < voisins.size(); i++) {
 		sommetsCouverts.push_back(graphe.getSommetFromId(voisins[i]));
@@ -127,7 +143,7 @@ void Solution::updateNonCouverts(Sommet* sommet,Graphe graphe) {
 
 }
 
-
+//Selection probabiliste d'une solution
 int Solution::selection(std::vector<double> probs) {
 	double random = rand()%RAND_MAX;
 	for (int j = 0; j < probs.size(); j++) {
@@ -142,6 +158,7 @@ int Solution::selection(std::vector<double> probs) {
 	return -1;
 }
 
+//Mise a jour locale de la trace de phéromones
 void Solution::localUpdate(Sommet* sommet, double evap, double t0) {
 	double trace = ( evap* sommet->getTrace()) + (1 - evap) * t0;
 	sommet->setTrace(trace);
@@ -151,7 +168,7 @@ int Solution::FonctionObj() {
 	return grapheSize/sequence.size();
 }
 
-
+//calcult de la visibilites d'une solution (nombre de sommets non couverts qu'elle couvre)
 int Solution::visibilite(Sommet* sommet,Graphe graphe) {
 	std::vector<Sommet*> voisins = sommet->getPVoisins();
 	int result = 0;
@@ -170,6 +187,7 @@ int Solution::visibilite(Sommet* sommet,Graphe graphe) {
 	return result;
 }
 
+//Est ce que ce sommet a deja ete selectionné?
 bool Solution::dejaSelectionne(Sommet* sommet)
 {
 	for (int i = 0; i < sequence.size(); i++)
@@ -180,6 +198,7 @@ bool Solution::dejaSelectionne(Sommet* sommet)
 	return false;
 }
 
+//Filtrage des sommets candidats
 std::vector<Sommet*> Solution::voisinsValides(std::vector<Sommet*> voisins)
 {
 	std::vector<Sommet*> result;
@@ -194,6 +213,7 @@ std::vector<Sommet*> Solution::voisinsValides(std::vector<Sommet*> voisins)
 	return result;
 }
 
+//Solutuion valide?
 bool Solution::valide() {
 	return sommetsNonCouverts.size() == 0 ? true : false;
 }
@@ -208,6 +228,7 @@ void Solution::setSequence(std::vector<Sommet*> sequenceP)
 	Solution::sequence = sequenceP;
 }
 
+//Critère d'arret attein?
 bool Solution::termine() {
 	if (valide())
 		return true;
